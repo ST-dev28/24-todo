@@ -40,6 +40,9 @@ form > button {
 .list {
   display: grid;
   width: 100%;
+  /* "max-width" padaro, jog atsizvelgiant i dabartini "grid-template-columns" elementu eileje butu ne daugiau 4 vienetu*/
+  max-width: calc (240px * 5 + 4 * 30px - 1px);
+  /*min plotis 240px ir fraction kaip butinimybe grido, jei vus 2 ar 3 fr, skirtumo nebus */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 30px;
 }
@@ -47,6 +50,7 @@ form > button {
 .list > .task {
   background-color: #fff;
   padding: 15px;
+  border: 2px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 4px 10px #0004;
 }

@@ -8,8 +8,10 @@ class Todo {
         this.newBorderColorDOM = null;
         this.buttonSaveDOM = null;
 
+        this.messages = JSON.parse(localStorage.getItem('messages')) || [];
+
         this.init();
-    };
+    }
 
     init() {
         //validacijos
@@ -31,8 +33,10 @@ class Todo {
         this.DOM.classList.add('todo');
 
         this.render();
+        this.renderList();
         this.addEvents();
     }
+
     isValidSelector() {
         if (typeof this.IDselector !== 'string' ||
             this.IDselector === '') {
@@ -66,6 +70,12 @@ class Todo {
 
     generateList() {
         return `<div class="list"></div>`;
+    }
+
+    renderList() {
+        for (const task of this.messages) {
+            this.renderTask(task.messageText, task.borderColor);
+        }
     }
 
     renderTask(text, borderColor = '#ccc') {
@@ -103,7 +113,19 @@ class Todo {
             const message = this.newMessageDOM.value;
             const color = this.newBorderColorDOM.value;
 
+            if (message === '') {
+                return false;
+            }
+
             this.renderTask(message, color);
+
+            this.messages.push({
+                messageText: message,
+                borderColor: color
+            })
+
+            localStorage.setItem('messages', JSON.stringify(this.messages));
+            //console.log(this.messages);
         })
     }
 }
